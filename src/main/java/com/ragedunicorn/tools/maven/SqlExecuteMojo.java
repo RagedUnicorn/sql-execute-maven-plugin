@@ -49,11 +49,11 @@ import org.apache.maven.settings.Settings;
 @Mojo(name = "sql-execute")
 public class SqlExecuteMojo extends AbstractMojo {
   // the database driver to use
-  @Parameter(property = "driver")
+  @Parameter(property = "driver", required = true)
   private String driver;
 
   // connection string for the database
-  @Parameter(property = "url")
+  @Parameter(property = "url", required = true)
   private String url;
 
   // user to use to connect to the database - overwritten by server
