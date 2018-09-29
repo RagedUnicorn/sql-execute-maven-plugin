@@ -43,41 +43,44 @@ import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.settings.Server;
 import org.apache.maven.settings.Settings;
 
 @Mojo(name = "sql-execute")
 public class SqlExecuteMojo extends AbstractMojo {
+  // the database driver to use
   @Parameter(property = "driver")
   private String driver;
 
+  // connection string for the database
   @Parameter(property = "url")
   private String url;
 
+  // user to use to connect to the database - overwritten by server
   @Parameter(property = "user")
   private String user;
 
+  // password to use to connect to the database - overwritten by server
   @Parameter(property = "password")
   private String password;
 
+  // references a server configuration in your .m2 settings.xml. This is the preferred way for storing credentials
   @Parameter(property = "server")
   private String server;
 
+  // an sql query to execute
   @Parameter(property = "sqlQuery")
   private String sqlQuery;
 
+  // a list of one or more sql files to execute
   @Parameter
   private File[] sqlFiles;
 
-  @Parameter(defaultValue = "${settings}", readonly = true)
-  private Settings settings;
-
-  @Parameter(defaultValue = "${project}", readonly = true)
-  private MavenProject project;
-
   @Parameter(defaultValue = "${mojoExecution}", readonly = true)
   private MojoExecution execution;
+
+  @Parameter(defaultValue = "${settings}", readonly = true)
+  private Settings settings;
 
   private List<Transaction> transactions = new ArrayList<>();
 
