@@ -153,6 +153,18 @@ sql-execute-maven-plugin
 clean install
 ```
 
+##### Docker
+
+This project contains docker-compose files for testing and trying out for all supported databases. When using the `dev` variant of the docker-compose files you have to connect to the container and manually start the process by running the `docker-entrypoint.sh` script.
+
+To start the containers either use the command line or the prepared docker run configurations if you are using intellij.
+
+```
+docker-compose -f [docker-compose-file] -d
+```
+
+**Note:** The MySQL and MariaDB container use the same ports and thus cannot be run at the same time.
+
 ## License
 
 Copyright (c) 2018 Michael Wiesendanger
