@@ -153,6 +153,39 @@ sql-execute-maven-plugin
 clean install
 ```
 
+
+#### Create a Release
+
+In maven `settings.xml` configure the ossrh account
+
+```
+<server>
+  <id>ossrh</id>
+  <username></username>
+  <password></password>
+</server>
+```
+
+#### Build and Release 
+
+```
+mvn clean deploy -P deploy
+```
+
+#### Move Staging to Release
+
+If `autoReleaseAfterClose` is set to false in the `nexus-staging-maven-plugin` plugin an additional step is required to move the deployment from staging to release.
+
+```
+mvn nexus-staging:release
+```
+
+Or if the deployment didn't workout you can drop the artifact from the staging repository.
+
+```
+mvn nexus-staging:drop
+```
+
 ##### Docker
 
 This project contains docker-compose files for testing and trying out for all supported databases. When using the `dev` variant of the docker-compose files you have to connect to the container and manually start the process by running the `docker-entrypoint.sh` script.
