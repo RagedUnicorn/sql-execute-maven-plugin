@@ -145,6 +145,14 @@ Or add the credentials directly into the plugin configuration.
 
 The project contains IntelliJ run configurations that can be used for most tasks. Create a folder `runConfigurations` inside the `.idea` folder and copy over all run configurations.
 
+##### Build Project
+
+sql-execute-maven-plugin
+
+```
+clean install
+```
+
 ## License
 
 Copyright (c) 2018 Michael Wiesendanger
