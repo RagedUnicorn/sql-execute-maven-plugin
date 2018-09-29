@@ -49,7 +49,7 @@
 
   <profiles>
     <profile>
-      <id>mysql</id>
+      <id>mariadb</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
@@ -66,9 +66,9 @@
       </properties>
     </profile>
     <profile>
-      <id>mariadb</id>
+      <id>mysql</id>
       <properties>
-        <database.baseurl>jdbc:mariadb://localhost:3306/</database.baseurl>
+        <database.baseurl>jdbc:mysql://localhost:3306/</database.baseurl>
         <database.url>${database.baseurl}</database.url>
         <database.driver>mysql</database.driver>
         <database.server>plugin-test</database.server>
