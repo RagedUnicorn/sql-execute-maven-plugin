@@ -73,7 +73,7 @@ public class SqlExecuteMojo extends AbstractMojo {
   private String sqlQuery;
 
   // a list of one or more sql files to execute
-  @Parameter
+  @Parameter(property = "sqlFiles")
   private File[] sqlFiles;
 
   @Parameter(defaultValue = "${mojoExecution}", readonly = true)
