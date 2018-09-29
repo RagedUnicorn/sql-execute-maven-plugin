@@ -126,7 +126,9 @@ public class SqlExecuteMojo extends AbstractMojo {
    *
    * @param url  A fully qualified database url
    * @param info Contains credentials necessary to connect to the database
+   *
    * @return A connection to a database
+   *
    * @throws MojoExecutionException An exception occurring during the execution of a plugin
    */
   private Connection getConnection(final String url, final Properties info)
@@ -143,7 +145,9 @@ public class SqlExecuteMojo extends AbstractMojo {
    * simple query.
    *
    * @param connection An established connection to a database
+   *
    * @return true for a successful connection otherwise false
+   *
    * @throws MojoExecutionException An exception occurring during the execution of a plugin
    */
   private boolean testConnection(final Connection connection) throws MojoExecutionException {
@@ -169,6 +173,7 @@ public class SqlExecuteMojo extends AbstractMojo {
    * While the user cannot be empty the password is optional.
    *
    * @return A property object containing credentials to a database
+   *
    * @throws MojoExecutionException An exception occurring during the execution of a plugin
    */
   private Properties getCredentials() throws MojoExecutionException {
@@ -198,8 +203,7 @@ public class SqlExecuteMojo extends AbstractMojo {
     }
 
     Properties info = new Properties();
-    // fallback to plugin configuration if credentials could not be retrieved from
-    // maven settings.xml
+    // fallback to plugin configuration if credentials could not be retrieved from maven settings.xml
     if (user != null) {
       info.setProperty("user", user);
     } else if (this.user != null) {
@@ -250,6 +254,7 @@ public class SqlExecuteMojo extends AbstractMojo {
    * Convert an sqlCommand to an InputStream.
    *
    * @param sqlCommand An sql query that should get converted
+   *
    * @return InputStream or null if {link #sqlCommand} could not get converted
    */
   private InputStream convertToStream(final String sqlCommand) {
@@ -267,6 +272,7 @@ public class SqlExecuteMojo extends AbstractMojo {
    * preventing any further statements that might depend on this to be executed.
    *
    * @param sqlFile An SQL file that should get converted
+   *
    * @return InputStream or null if {link #sqlFile} could not get converted
    */
   private InputStream convertToStream(final File sqlFile) throws MojoExecutionException {
@@ -285,6 +291,7 @@ public class SqlExecuteMojo extends AbstractMojo {
    * Execute a stream of sql statements.
    *
    * @param stream A stream of sql statements
+   *
    * @throws MojoExecutionException An exception occurring during the execution of a plugin
    */
   private void executeStatements(final InputStream stream) throws MojoExecutionException {
