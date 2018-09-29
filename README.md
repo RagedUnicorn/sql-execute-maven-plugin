@@ -14,7 +14,7 @@ The below example is using MariaDB as an example. The plugin however supports al
       <plugin>
         <groupId>com.ragedunicorn.tools.maven</groupId>
         <artifactId>sql-execute-maven-plugin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>[version]</version>
         <dependencies>
           <!-- mariadbdriver -->
           <dependency>
