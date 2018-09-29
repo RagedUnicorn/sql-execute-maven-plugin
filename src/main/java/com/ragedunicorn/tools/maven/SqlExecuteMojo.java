@@ -307,8 +307,7 @@ public class SqlExecuteMojo extends AbstractMojo {
     getLog().info("Processing " + execution.getGoal() + ":" + execution.getExecutionId());
 
     if (stream == null) {
-      getLog().error("Stream is null");
-      return;
+      throw new MojoExecutionException("Missing stream parameter");
     }
 
     Scanner scanner = new Scanner(stream, "UTF-8");
