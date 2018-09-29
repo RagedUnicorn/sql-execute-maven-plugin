@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+  mariadb:
+    image: ragedunicorn/mariadb:1.1.1-dev
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/sh
+    labels:
+      com.ragedunicorn.mariadb.environment: "dev"
+      com.ragedunicorn.mariadb.description: "MariaDB"
+volumes:
+  mariadb_data: {}

@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+  postgresql:
+    image: ragedunicorn/postgresql:1.1.0-dev
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/sh
+    labels:
+      com.ragedunicorn.postgresql.environment: "dev"
+      com.ragedunicorn.postgresql.description: "PostgreSQL"
+volumes:
+  postgresql_data: {}

@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+  postgresql:
+    image: ragedunicorn/postgresql:1.1.0-stable
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "/docker-healthcheck.sh"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+    labels:
+      com.ragedunicorn.postgresql.environment: "prod"
+      com.ragedunicorn.postgresql.description: "PostgreSQL"
+volumes:
+  postgresql_data: {}

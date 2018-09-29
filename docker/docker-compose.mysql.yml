@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+  mysql:
+    image: ragedunicorn/mysql:1.0.3-stable
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "/docker-healthcheck.sh"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+    labels:
+      com.ragedunicorn.mysql.environment: "prod"
+      com.ragedunicorn.mysql.description: "MySQL"
+volumes:
+  mysql_data: {}

@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+  mariadb:
+    image: ragedunicorn/mariadb:1.1.1-stable
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "/docker-healthcheck.sh"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+    labels:
+      com.ragedunicorn.mariadb.environment: "prod"
+      com.ragedunicorn.mariadb.description: "MariaDB"
+volumes:
+  mariadb_data: {}
