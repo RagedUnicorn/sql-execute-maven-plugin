@@ -6,7 +6,7 @@
   <groupId>com.ragedunicorn.tools.maven</groupId>
   <artifactId>sql-execute-example</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Example project for Maven sql execute plugin</description>
@@ -100,7 +100,7 @@
       <plugin>
         <groupId>com.ragedunicorn.tools.maven</groupId>
         <artifactId>sql-execute-maven-plugin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
         <dependencies>
           <dependency>
             <groupId>org.mariadb.jdbc</groupId>
@@ -185,12 +185,13 @@
   </build>
 
   <!-- include for debugging -->
-
+  <!--
   <dependencies>
     <dependency>
       <groupId>com.ragedunicorn.tools.maven</groupId>
       <artifactId>sql-execute-maven-plugin</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>1.0.0</version>
     </dependency>
   </dependencies>
+  -->
 </project>
