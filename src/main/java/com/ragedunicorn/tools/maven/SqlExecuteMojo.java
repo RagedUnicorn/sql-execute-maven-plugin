@@ -93,13 +93,7 @@ public class SqlExecuteMojo extends AbstractMojo {
    * @throws MojoExecutionException An exception occurring during the execution of a plugin
    */
   public void execute() throws MojoExecutionException {
-    if (driver == null || driver.isEmpty()) {
-      throw new MojoExecutionException("Missing parameter driver");
-    }
-
-    if (url == null || url.isEmpty()) {
-      throw new MojoExecutionException("Missing parameter url");
-    }
+    validateRequiredInputParameters();
 
     if (sqlQuery != null) {
       Transaction transaction = new Transaction(sqlQuery);
@@ -118,6 +112,21 @@ public class SqlExecuteMojo extends AbstractMojo {
     if (connection != null && testConnection(connection)) {
       getLog().info("Connection to database was successful");
       processTransactions();
+    }
+  }
+
+  /**
+   * Validate required input parameters.
+   *
+   * @throws MojoExecutionException An exception occurring during the execution of a plugin
+   */
+  private void validateRequiredInputParameters() throws MojoExecutionException {
+    if (driver == null || driver.isEmpty()) {
+      throw new MojoExecutionException("Missing required parameter driver");
+    }
+
+    if (url == null || url.isEmpty()) {
+      throw new MojoExecutionException("Missing required parameter url");
     }
   }
 
