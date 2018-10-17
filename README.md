@@ -2,6 +2,8 @@
 
 > A maven plugin for executing single sql queries or sql files on a database
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.ragedunicorn.tools.maven/sql-execute-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.ragedunicorn.tools.maven%22%20AND%20a:%22sql-execute-maven-plugin%22)
+
 # Usage
 
 The below example is using MariaDB as an example. The plugin however supports also MySQL and PostgreSQL. See example module for more details.
