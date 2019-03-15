@@ -188,6 +188,14 @@ Or if the deployment didn't workout you can drop the artifact from the staging r
 mvn nexus-staging:drop
 ```
 
+**Note:** On MacOS the error `gpg: signing failed: Inappropriate ioctl for device` can be solved by setting the tty export variable for gpg.
+
+```
+export GPG_TTY=$(tty)
+```
+
+If you are using the IntelliJ console this might need to be set directly in that console.
+
 ##### Docker
 
 This project contains docker-compose files for testing and trying out for all supported databases. When using the `dev` variant of the docker-compose files you have to connect to the container and manually start the process by running the `docker-entrypoint.sh` script.
