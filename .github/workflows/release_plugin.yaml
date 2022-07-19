@@ -16,6 +16,9 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: 'maven'
+          server-id: ossrh
+          server-username: SONATYPE_USERNAME
+          server-password: SONATYPE_PASSWORD
       - name: Cache Local Maven Repository
         uses: actions/cache@v2
         with:
@@ -23,7 +26,13 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Create GitHub Release
-        run: mvn github-release:github-release -P release -D github.auth-token=$TOKEN_GITHUB
-        env:
-          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+      - name: Install gpg secret key
+        run: |
+          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
+      - name: Publish Package to OSSRH
+        run: mvn --batch-mode deploy -P release -D gpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+      env:
+        TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+        SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}

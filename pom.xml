@@ -63,7 +63,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
     <checkstyle.header.location>LICENSE.txt</checkstyle.header.location>
-    <gpg.keyname>488C9072D9E5426B</gpg.keyname>
   </properties>
 
   <profiles>
@@ -72,41 +71,19 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-    </profile>
-    <profile>
-      <id>release</id>
       <properties>
         <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>true</skip.package.javadoc>
         <skip.package.sources>true</skip.package.sources>
       </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.ragedunicorn.tools.maven</groupId>
-            <artifactId>github-release-maven-plugin</artifactId>
-            <version>1.0.4</version>
-            <executions>
-              <execution>
-                <id>default-cli</id>
-                <phase>deploy</phase>
-                <goals>
-                  <goal>github-release</goal>
-                </goals>
-                <configuration>
-                  <owner>ragedunicorn</owner>
-                  <repository>sql-execute-maven-plugin</repository>
-                  <!--suppress UnresolvedMavenProperty -->
-                  <authToken>${github.auth-token}</authToken>
-                  <tagName>${project.version}</tagName>
-                  <name>${project.version}</name>
-                  <releaseNotes>src/main/resources/release-notes.md</releaseNotes>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <properties>
+        <skip.sign.gpg>false</skip.sign.gpg>
+        <skip.package.javadoc>true</skip.package.javadoc>
+        <skip.package.sources>true</skip.package.sources>
+      </properties>
     </profile>
   </profiles>
 
@@ -125,6 +102,70 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.5.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+              <skip>${skip.sign.gpg}</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <skipSource>${skip.package.sources}</skipSource>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <skip>${skip.package.javadoc}</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
