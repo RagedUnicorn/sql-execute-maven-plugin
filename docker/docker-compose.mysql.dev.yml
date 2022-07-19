@@ -1,14 +1,14 @@
 version: '3'
 services:
   mysql:
-    image: ragedunicorn/mysql:1.0.3-dev
+    image: ragedunicorn/mysql:1.1.0-dev
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     stdin_open: true
     tty: true
-    entrypoint: /docker-entrypoint.sh
+    entrypoint: /bin/sh
     labels:
       com.ragedunicorn.mysql.environment: "dev"
       com.ragedunicorn.mysql.description: "MySQL database container"

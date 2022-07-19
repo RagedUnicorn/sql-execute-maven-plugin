@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   mariadb:
-    image: ragedunicorn/mariadb:1.1.1-stable
+    image: ragedunicorn/mariadb:1.4.0-stable
     volumes:
       - mariadb_data:/var/lib/mysql
     ports:

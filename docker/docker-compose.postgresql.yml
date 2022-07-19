@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   postgresql:
-    image: ragedunicorn/postgresql:1.1.0-stable
+    image: ragedunicorn/postgresql:1.3.0-stable
     volumes:
       - postgresql_data:/var/lib/postgresql/data
     ports:
