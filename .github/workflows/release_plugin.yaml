@@ -24,7 +24,7 @@ jobs:
           cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
       - name: Publish Package to OSSRH
-        run: mvn -X deploy -P release -D gpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+        run: mvn -X deploy -P release
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
