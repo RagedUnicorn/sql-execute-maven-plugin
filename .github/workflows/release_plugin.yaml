@@ -32,7 +32,7 @@ jobs:
           gpg --list-secret-keys --keyid-format LONG
       - name: Publish Package to OSSRH
         run: mvn --batch-mode deploy -P release -D gpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-      env:
-        TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
-        SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-        SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+        env:
+          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+          SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
