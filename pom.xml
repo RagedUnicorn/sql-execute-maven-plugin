@@ -48,17 +48,6 @@
     <url>https://github.com/RagedUnicorn/sql-execute-maven-plugin/tree/master</url>
   </scm>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-    </repository>
-  </distributionManagement>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
@@ -78,11 +67,41 @@
       </properties>
     </profile>
     <profile>
-      <id>release</id>
+      <id>release-ossrh-package</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <name>Sonatype Apache Maven Snapshots Packages</name>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <name>Sonatype Apache Maven Packages</name>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+      </distributionManagement>
       <properties>
         <skip.sign.gpg>false</skip.sign.gpg>
-        <skip.package.javadoc>true</skip.package.javadoc>
-        <skip.package.sources>true</skip.package.sources>
+        <skip.package.javadoc>false</skip.package.javadoc>
+        <skip.package.sources>false</skip.package.sources>
+      </properties>
+    </profile>
+    <profile>
+      <id>release-github-package</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+      </distributionManagement>
+      <properties>
+        <skip.sign.gpg>false</skip.sign.gpg>
+        <skip.package.javadoc>false</skip.package.javadoc>
+        <skip.package.sources>false</skip.package.sources>
       </properties>
     </profile>
   </profiles>
