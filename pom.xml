@@ -112,6 +112,29 @@
         <skip.package.sources>true</skip.package.sources>
         <skip.staging.sonatype>true</skip.staging.sonatype>
       </properties>
+      <plugin>
+        <groupId>com.ragedunicorn.tools.maven</groupId>
+        <artifactId>github-release-maven-plugin</artifactId>
+        <version>1.0.4</version>
+        <executions>
+          <execution>
+            <id>default-cli</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>github-release</goal>
+            </goals>
+            <configuration>
+              <owner>ragedunicorn</owner>
+              <repository>sql-execute-maven-plugin</repository>
+              <!--suppress UnresolvedMavenProperty -->
+              <authToken>${github.auth-token}</authToken>
+              <tagName>${project.version}</tagName>
+              <name>${project.version}</name>
+              <releaseNotes>src/main/resources/release-notes.md</releaseNotes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </profile>
   </profiles>
 
@@ -195,29 +218,6 @@
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
           <skipNexusStagingDeployMojo>${skip.staging.sonatype}</skipNexusStagingDeployMojo>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.ragedunicorn.tools.maven</groupId>
-        <artifactId>github-release-maven-plugin</artifactId>
-        <version>1.0.4</version>
-        <executions>
-          <execution>
-            <id>default-cli</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>github-release</goal>
-            </goals>
-            <configuration>
-              <owner>ragedunicorn</owner>
-              <repository>sql-execute-maven-plugin</repository>
-              <!--suppress UnresolvedMavenProperty -->
-              <authToken>${github.auth-token}</authToken>
-              <tagName>${project.version}</tagName>
-              <name>${project.version}</name>
-              <releaseNotes>src/main/resources/release-notes.md</releaseNotes>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
