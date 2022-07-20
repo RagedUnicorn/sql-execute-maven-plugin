@@ -22,7 +22,7 @@ The below example is using MariaDB as an example. The plugin however supports al
           <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>2.0.3</version>
+            <version>[version]</version>
           </dependency>
         </dependencies>
         <configuration>
@@ -80,7 +80,7 @@ The below example is using MariaDB as an example. The plugin however supports al
 <dependency>
   <groupId>org.mariadb.jdbc</groupId>
   <artifactId>mariadb-java-client</artifactId>
-  <version>2.0.3</version>
+  <version>[version]</version>
 </dependency>
 ```
 
@@ -90,7 +90,7 @@ The below example is using MariaDB as an example. The plugin however supports al
 <dependency>
   <groupId>mysql</groupId>
   <artifactId>mysql-connector-java</artifactId>
-  <version>8.0.12</version>
+  <version>[version]</version>
 </dependency>
 ```
 
@@ -100,11 +100,9 @@ The below example is using MariaDB as an example. The plugin however supports al
 <dependency>
   <groupId>org.postgresql</groupId>
   <artifactId>postgresql</artifactId>
-  <version>42.2.5</version>
+  <version>[version]</version>
 </dependency>
 ```
-
-**Note:** Feel free to use a newer version of the drivers. The above versions are the last used versions for testing.
 
 ##### Credentials
 
@@ -155,46 +153,24 @@ sql-execute-maven-plugin
 clean install
 ```
 
-
 #### Create a Release
 
-In maven `settings.xml` configure the ossrh account
+This project has GitHub action profiles for different Devops related work such as deployments to different places. See .github folder for details.
+The project is deployed to three different places. Each deployment has its own Maven profile for configuration.
 
-```
-<server>
-  <id>ossrh</id>
-  <username></username>
-  <password></password>
-</server>
-```
+##### GitHub Release
 
-#### Build and Release 
+`.github/workflows/github_release.yaml` - Creates a tag and release on GitHub
 
-```
-mvn clean deploy -P deploy
-```
+##### GitHub Package Release
 
-#### Move Staging to Release
+`.github/workflows/github_package_release.yaml` - Releases a package on GitHub
 
-If `autoReleaseAfterClose` is set to false in the `nexus-staging-maven-plugin` plugin an additional step is required to move the deployment from staging to release.
+##### OSSRH Package Release
 
-```
-mvn nexus-staging:release
-```
+`.github/workflows/ossrh_package_release.yaml` - Releases a package on OSSRH (Sonatype)
 
-Or if the deployment didn't workout you can drop the artifact from the staging repository.
-
-```
-mvn nexus-staging:drop
-```
-
-**Note:** On MacOS the error `gpg: signing failed: Inappropriate ioctl for device` can be solved by setting the tty export variable for gpg.
-
-```
-export GPG_TTY=$(tty)
-```
-
-If you are using the IntelliJ console this might need to be set directly in that console.
+All steps are required to make a full release of the plugin but can be done independently of each other. The workflows have to be manually invoked on GitHub.
 
 ##### Docker
 
