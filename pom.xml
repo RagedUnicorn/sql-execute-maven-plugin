@@ -48,22 +48,10 @@
     <url>https://github.com/RagedUnicorn/sql-execute-maven-plugin/tree/master</url>
   </scm>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-    </repository>
-  </distributionManagement>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
     <checkstyle.header.location>LICENSE.txt</checkstyle.header.location>
-    <gpg.keyname>488C9072D9E5426B</gpg.keyname>
   </properties>
 
   <profiles>
@@ -76,23 +64,81 @@
         <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>true</skip.package.javadoc>
         <skip.package.sources>true</skip.package.sources>
+        <skip.staging.sonatype>true</skip.staging.sonatype>
       </properties>
     </profile>
     <profile>
-      <id>release</id>
-      <properties>
-        <skip.sign.gpg>true</skip.sign.gpg>
-        <skip.package.javadoc>true</skip.package.javadoc>
-        <skip.package.sources>true</skip.package.sources>
-      </properties>
-    </profile>
-    <profile>
-      <id>deploy</id>
+      <id>release-ossrh-package</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <name>Sonatype Apache Maven Snapshots Packages</name>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <name>Sonatype Apache Maven Packages</name>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+      </distributionManagement>
       <properties>
         <skip.sign.gpg>false</skip.sign.gpg>
         <skip.package.javadoc>false</skip.package.javadoc>
         <skip.package.sources>false</skip.package.sources>
+        <skip.staging.sonatype>false</skip.staging.sonatype>
       </properties>
+    </profile>
+    <profile>
+      <id>release-github-package</id>
+      <distributionManagement>
+        <repository>
+          <id>github</id>
+          <name>GitHub RagedUnicorn Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/ragedunicorn/sql-execute-maven-plugin</url>
+        </repository>
+      </distributionManagement>
+      <properties>
+        <skip.sign.gpg>true</skip.sign.gpg>
+        <skip.package.javadoc>false</skip.package.javadoc>
+        <skip.package.sources>false</skip.package.sources>
+        <skip.staging.sonatype>false</skip.staging.sonatype>
+      </properties>
+    </profile>
+    <profile>
+      <id>release-github</id>
+      <properties>
+        <skip.sign.gpg>true</skip.sign.gpg>
+        <skip.package.javadoc>true</skip.package.javadoc>
+        <skip.package.sources>true</skip.package.sources>
+        <skip.staging.sonatype>true</skip.staging.sonatype>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.ragedunicorn.tools.maven</groupId>
+            <artifactId>github-release-maven-plugin</artifactId>
+            <version>1.0.4</version>
+            <executions>
+              <execution>
+                <id>default-cli</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>github-release</goal>
+                </goals>
+                <configuration>
+                  <owner>ragedunicorn</owner>
+                  <repository>sql-execute-maven-plugin</repository>
+                  <!--suppress UnresolvedMavenProperty -->
+                  <authToken>${github.auth-token}</authToken>
+                  <tagName>${project.version}</tagName>
+                  <name>${project.version}</name>
+                  <releaseNotes>src/main/resources/release-notes.md</releaseNotes>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
@@ -124,9 +170,11 @@
               <goal>sign</goal>
             </goals>
             <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
               <skip>${skip.sign.gpg}</skip>
-              <keyname>${gpg.keyname}</keyname>
-              <passphraseServerId>${gpg.keyname}</passphraseServerId>
             </configuration>
           </execution>
         </executions>
@@ -171,7 +219,8 @@
         <configuration>
           <serverId>ossrh</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <skipNexusStagingDeployMojo>${skip.staging.sonatype}</skipNexusStagingDeployMojo>
         </configuration>
       </plugin>
       <plugin>
