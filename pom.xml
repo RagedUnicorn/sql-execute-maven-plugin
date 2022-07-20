@@ -77,6 +77,7 @@
         <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>true</skip.package.javadoc>
         <skip.package.sources>true</skip.package.sources>
+        <skip.deploy>true</skip.deploy>
       </properties>
     </profile>
     <profile>
@@ -85,6 +86,7 @@
         <skip.sign.gpg>false</skip.sign.gpg>
         <skip.package.javadoc>false</skip.package.javadoc>
         <skip.package.sources>false</skip.package.sources>
+        <skip.deploy>true</skip.deploy>
       </properties>
       <build>
         <plugins>
@@ -116,6 +118,7 @@
         <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>false</skip.package.javadoc>
         <skip.package.sources>false</skip.package.sources>
+        <skip.deploy>false</skip.deploy>
       </properties>
     </profile>
     <profile>
@@ -124,6 +127,7 @@
         <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>true</skip.package.javadoc>
         <skip.package.sources>true</skip.package.sources>
+        <skip.deploy>true</skip.deploy>
       </properties>
       <build>
         <plugins>
@@ -223,6 +227,14 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <skip>${skip.deploy}</skip>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
