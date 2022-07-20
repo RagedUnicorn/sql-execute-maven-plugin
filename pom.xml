@@ -130,8 +130,8 @@
                   <repository>sql-execute-maven-plugin</repository>
                   <!--suppress UnresolvedMavenProperty -->
                   <authToken>${github.auth-token}</authToken>
-                  <tagName>${project.version}</tagName>
-                  <name>${project.version}</name>
+                  <tagName>v${project.version}</tagName>
+                  <name>v${project.version}</name>
                   <releaseNotes>src/main/resources/release-notes.md</releaseNotes>
                 </configuration>
               </execution>
