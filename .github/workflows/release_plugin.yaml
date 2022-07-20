@@ -36,7 +36,8 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Publish Package to GitHub
-        run: mvn --no-transfer-progress --batch-mode deploy \
+        run: |
+          mvn --no-transfer-progress --batch-mode deploy \
           -P release-github-package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
