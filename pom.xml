@@ -99,7 +99,7 @@
         </repository>
       </distributionManagement>
       <properties>
-        <skip.sign.gpg>false</skip.sign.gpg>
+        <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>false</skip.package.javadoc>
         <skip.package.sources>false</skip.package.sources>
       </properties>
