@@ -48,6 +48,19 @@
     <url>https://github.com/RagedUnicorn/sql-execute-maven-plugin/tree/master</url>
   </scm>
 
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <name>Sonatype Apache Maven Snapshots Packages</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <name>Sonatype Apache Maven Packages</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+  </distributionManagement>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
@@ -68,18 +81,6 @@
     </profile>
     <profile>
       <id>release-ossrh-package</id>
-      <distributionManagement>
-        <snapshotRepository>
-          <id>ossrh</id>
-          <name>Sonatype Apache Maven Snapshots Packages</name>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-          <id>ossrh</id>
-          <name>Sonatype Apache Maven Packages</name>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-        </repository>
-      </distributionManagement>
       <properties>
         <skip.sign.gpg>false</skip.sign.gpg>
         <skip.package.javadoc>false</skip.package.javadoc>
@@ -103,6 +104,7 @@
     </profile>
     <profile>
       <id>release-github-package</id>
+      <!-- override default distribution to ossrh -->
       <distributionManagement>
         <repository>
           <id>github</id>
