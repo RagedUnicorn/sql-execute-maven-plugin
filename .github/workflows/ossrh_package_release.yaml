@@ -1,10 +1,10 @@
-name: "Release Plugin"
+name: "OSSRH Package Release"
 on: [workflow_dispatch]
 
 jobs:
-  github-release-job:
+  ossrh-package-release-job:
     runs-on: ubuntu-latest
-    name: GitHub Release
+    name: OSSRH Package Release
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,17 +30,13 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-      - name: Set up Java for publishing to GitHub Packages
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-      - name: Publish Package to GitHub
+      - name: Publish Package to OSSRH
         run: |
-          mvn --no-transfer-progress --batch-mode deploy \
-          -P release-github-package
+          mvn --batch-mode --no-transfer-progress \
+          deploy \
+          -P release-ossrh-package \
+          -D gpg.passphrase=$OSSRH_GPG_SECRET_KEY_PASSWORD
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           OSSRH_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}

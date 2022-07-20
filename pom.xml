@@ -64,6 +64,7 @@
         <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>true</skip.package.javadoc>
         <skip.package.sources>true</skip.package.sources>
+        <skip.staging.sonatype>true</skip.staging.sonatype>
       </properties>
     </profile>
     <profile>
@@ -84,6 +85,7 @@
         <skip.sign.gpg>false</skip.sign.gpg>
         <skip.package.javadoc>false</skip.package.javadoc>
         <skip.package.sources>false</skip.package.sources>
+        <skip.staging.sonatype>false</skip.staging.sonatype>
       </properties>
     </profile>
     <profile>
@@ -99,6 +101,16 @@
         <skip.sign.gpg>true</skip.sign.gpg>
         <skip.package.javadoc>false</skip.package.javadoc>
         <skip.package.sources>false</skip.package.sources>
+        <skip.staging.sonatype>false</skip.staging.sonatype>
+      </properties>
+    </profile>
+    <profile>
+      <id>release-github</id>
+      <properties>
+        <skip.sign.gpg>true</skip.sign.gpg>
+        <skip.package.javadoc>true</skip.package.javadoc>
+        <skip.package.sources>true</skip.package.sources>
+        <skip.staging.sonatype>true</skip.staging.sonatype>
       </properties>
     </profile>
   </profiles>
@@ -180,7 +192,8 @@
         <configuration>
           <serverId>ossrh</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <skipNexusStagingDeployMojo>${skip.staging.sonatype}</skipNexusStagingDeployMojo>
         </configuration>
       </plugin>
       <plugin>
