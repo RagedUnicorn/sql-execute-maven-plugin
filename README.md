@@ -1,5 +1,7 @@
 # sql-execute-maven-plugin
 
+![sql-execute-maven-plugin](docs/sql_execute_maven_plugin_banner.svg)
+
 > A maven plugin for executing single sql queries or sql files on a database
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.ragedunicorn.tools.maven/sql-execute-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.ragedunicorn.tools.maven%22%20AND%20a:%22sql-execute-maven-plugin%22)
